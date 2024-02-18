@@ -1,6 +1,6 @@
 ##-------- Functions ---------##
 
-def dir_q():
+def direction_question_print():
     print("What is the direction of conversion?")
 
 def temp_c_to_f(temp_val):
@@ -10,7 +10,7 @@ def temp_f_to_c(temp_val):
     return ((temp_val - 32) * (5/9))
 
 def temp():
-    dir_q()
+    direction_question_print()
     conv_dir = int(input("1) C to F\n2) F to C\n"))
     temp_val = float(input("Type the value: "))
     if conv_dir == 1:
@@ -25,7 +25,7 @@ def speed_mph_kph(speed_val, factor):
 
 
 def speed():
-    dir_q()
+    direction_question_print()
     conv_dir = int(input("1) MPH to KPH\n2) KPH to MPH\n"))
     speed_val = float(input("Type the value: "))
     factor = 1.60934
@@ -42,7 +42,7 @@ def weight_converter(weight_val, factor):
 
 
 def weight():
-    dir_q()
+    direction_question_print()
     conv_dir = int(input("1) kg to stone\n2) stone to kg\n3) kg to lbs\n4) lbs to kg\n5) stone to lbs\n6) lbs to stone\n"))
     weight_val = float(input("Type the value: "))
     stone_kg_factor = 6.35029
@@ -66,15 +66,11 @@ def weight():
 
 ##-------------- Main ---------------##
 
-print("This program converts values")
+print("This program converts values between different unit of measurment.")
 print("What is the type of conversion you'd like to do? (type a number 1, 2 or 3)")
 print("1) Temperature (C <-> F)\n2) Speed (MPH <-> KPH)\n3) Weight (kg <-> stone <-> lbs)")
 
 user_choice = int(input())
-
-print(type(user_choice))
-
-print("You have chosen " + str(user_choice))
 
 if user_choice > 3 or user_choice < 1:
     print("Error: value should be 1, 2 or 3")
