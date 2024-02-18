@@ -20,28 +20,48 @@ def temp():
     else:
         print("Error: wrong choice")
 
-def speed_mph_to_kph(speed_val):
-    return (speed_val * 1.60934)
+def speed_mph_kph(speed_val, factor):
+    return (speed_val * factor)
 
-def speed_kph_to_mph(speed_val):
-    return (speed_val * 0.62137119)
 
 def speed():
     dir_q()
     conv_dir = int(input("1) MPH to KPH\n2) KPH to MPH\n"))
     speed_val = float(input("Type the value: "))
+    factor = 1.60934
     if conv_dir == 1:
-        print("Answer: " + str(speed_mph_to_kph(speed_val)))
+        print("Answer: " + str(speed_mph_kph(speed_val, factor)))
     elif conv_dir == 2:
-        print("Answer: " + str(speed_kph_to_mph(speed_val)))
+        print("Answer: " + str(speed_mph_kph(speed_val, 1/factor)))
     else:
         print("Error: wrong choice")
 
-    return 0
+
+def weight_converter(weight_val, factor):
+    return (weight_val * factor)
+
 
 def weight():
     dir_q()
-    return 0
+    conv_dir = int(input("1) kg to stone\n2) stone to kg\n3) kg to lbs\n4) lbs to kg\n5) stone to lbs\n6) lbs to stone\n"))
+    weight_val = float(input("Type the value: "))
+    stone_kg_factor = 6.35029
+    stone_lbs_factor = 14
+    kg_lbs_factor = 2.20462
+    if conv_dir == 1:
+        print("Answer: " + str(weight_converter(weight_val, 1/stone_kg_factor)))
+    elif conv_dir == 2:
+        print("Answer: " + str(weight_converter(weight_val, stone_kg_factor)))
+    elif conv_dir == 3:
+        print("Answer: " + str(weight_converter(weight_val, kg_lbs_factor)))
+    elif conv_dir == 4:
+        print("Answer: " + str(weight_converter(weight_val, 1/kg_lbs_factor)))
+    elif conv_dir == 5:
+        print("Answer: " + str(weight_converter(weight_val, stone_lbs_factor)))
+    elif conv_dir == 6:
+        print("Answer: " + str(weight_converter(weight_val, 1/stone_lbs_factor)))
+    else:
+        print("Error: wrong choice")
 
 
 ##-------------- Main ---------------##
