@@ -110,6 +110,4 @@ if second_pok:
 else:
     print("First person is the winner!")
         
-print(f"person1 has {len(person1)} pokemons left")
-print(f"person2 has {len(person2)} pokemons left")
 
