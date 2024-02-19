@@ -49,17 +49,17 @@ def type_modifier(attacker_type, defender_type):
     return types_matrix[attacker_type][defender_type]
 
 
-p1 = Pokemon("pikachu", 8, 3, "earth")
-p2 = Pokemon("Bulbasaur", 3, 2, "earth")
-p3 = Pokemon("Squirtle", 6, 2, "water")
-p4 = Pokemon("Charmander", 9, 1, "fire")
-p5 = Pokemon("Pidgey", 2, 5, "wind")
+p1 = Pokemon("pikachu1", 8, 3, "earth")
+p2 = Pokemon("Bulbasaur1", 3, 2, "earth")
+p3 = Pokemon("Squirtle1", 6, 2, "water")
+p4 = Pokemon("Charmander1", 9, 1, "fire")
+p5 = Pokemon("Pidgey1", 2, 5, "wind")
 
-p6 = Pokemon("pikachu", 8, 3, "earth")
-p7 = Pokemon("Bulbasaur", 3, 2, "earth")
-p8 = Pokemon("Squirtle", 6, 2, "water")
-p9 = Pokemon("Charmander", 9, 1, "fire")
-p10 = Pokemon("Pidgey", 2, 5, "wind")
+p6 = Pokemon("pikachu2", 8, 3, "earth")
+p7 = Pokemon("Bulbasaur2", 3, 2, "earth")
+p8 = Pokemon("Squirtle2", 6, 2, "water")
+p9 = Pokemon("Charmander2", 9, 1, "fire")
+p10 = Pokemon("Pidgey2", 2, 5, "wind")
 
 person1 = [p1, p2, p3, p4, p5]
 person2 = [p6, p7, p8, p9, p10]
@@ -71,36 +71,45 @@ random.shuffle(person2)
 first_pok = person1.pop()
 second_pok = person2.pop()
 
-while (len(person1) > 0) and (len(person2) > 0):
+while (first_pok) and (second_pok):
     attacker_index = who_will_attack_first(first_pok.speed, second_pok.speed)
     if attacker_index:
-        attacker = second_pok.name
-        defender = first_pok.name
-        damage = type_modifier(second_pok.type, first_pok.type) * (random.randint(1, 20) + second_pok.strength)
-        first_pok.life -= damage
-        defender_life = first_pok.life
-        if first_pok.life <= 0:
-            print(f"{first_pok.name} is dead!")
-            first_pok = person1.pop()
-            print(f"{first_pok.name} has joind the fight!")
+        is_p1_attacker = False
+        attack_pok = second_pok
+        defend_pok = first_pok
+        attack_person = person2
+        defend_person = person1
     else:
-        attacker = first_pok.name
-        defender = second_pok.name
-        damage = type_modifier(first_pok.type, second_pok.type) * (random.randint(1, 20) + first_pok.strength)
-        second_pok.life -= damage
-        defender_life = second_pok.life
-        if second_pok.life <= 0:
-            print(f"{second_pok.name} is dead!")
+        is_p1_attacker = True
+        attack_pok = first_pok
+        defend_pok = second_pok
+        attack_person = person1
+        defend_person = person2
+    
+    damage = type_modifier(attack_pok.type, defend_pok.type) * (random.randint(1, 20) + attack_pok.strength)
+    defend_pok.life -= damage
+    print(f"{attack_pok.name} attacks {defend_pok.name}. deals {damage} damage. {defend_pok.name} now has {defend_pok.life} amount of life after the attack.")
+    if defend_pok.life <= 0:
+        print(f"{defend_pok.name} is dead!")
+        if is_p1_attacker:
+            if len(person2) <= 0:
+                second_pok = None
+                break
             second_pok = person2.pop()
             print(f"{second_pok.name} has joind the fight!")
-    
-    print(f"{attacker} attacks {defender}. deals {damage} damage. {defender} now has {defender_life} amount of life after the attack.")
+        else:
+            if len(person1) <= 0:
+                first_pok = None
+                break
+            first_pok = person1.pop()
+            print(f"{first_pok.name} has joind the fight!")
 
 
-if len(person1) <= 0:
+if second_pok:
     print("Second person is the winner!")
 else:
     print("First person is the winner!")
         
 print(f"person1 has {len(person1)} pokemons left")
 print(f"person2 has {len(person2)} pokemons left")
+
