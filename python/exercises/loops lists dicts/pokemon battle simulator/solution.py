@@ -1,3 +1,5 @@
+# TODO: the defender should be able to attack after they defend
+
 import random
 
 class Pokemon:
