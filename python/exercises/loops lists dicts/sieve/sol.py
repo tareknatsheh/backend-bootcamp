@@ -1,5 +1,3 @@
-import math
-
 # we want to return all prime number up to n using an algorithm called (sieve of eratosthenes)
 # The algorithm:
 # 1) loop over all the items in the main list
