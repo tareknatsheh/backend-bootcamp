@@ -59,6 +59,14 @@ class Shop:
             total += employee.daily_salary
         
         return total
+
+    def get_robots_repair_cost_per_day(self):
+        total = 0
+        for robot in self.__robot_pets:
+            if robot.status == "in repair":
+                total += robot.cost_to_fix_per_day
+
+        return total
     
     def get_robot_pet_details(self, id = None, name = None):
         wanted_pet_index, wanted_pet_obj = self.__find_robot_pet(id, name)
@@ -68,6 +76,15 @@ class Shop:
             if not attr.startswith("_"):
                 details += attr + ": " + str(getattr(wanted_pet_obj, attr)) + "\n"
         return details
+    
+    # This will simulate a day of work
+    # By the end of it, it updates the balance of the shop after subtracting repair
+    #   costs and employees daily salaries:
+    def simulate_a_day(self):
+        total_employees_cost = self.get_employees_total_cost_per_day()
+        total_repair_cost = self.get_robots_repair_cost_per_day()
+        self.__balance -= total_employees_cost + total_repair_cost
+        return self.__balance
                     
             
             
@@ -79,12 +96,10 @@ class Robot:
         if battery_type not in ["lithium", "alkaline"]:
             raise Exception(f"Wrong battery type: {battery_type}")
 
-
 class Employee(Robot):
     def __init__(self, name, id, battery_type, daily_salary):
         super().__init__(name, id, battery_type)
         self.daily_salary = daily_salary
-
 
 class Robot_pet(Robot):
     def __init__(self, name, id, battery_type, main_material, price, cost_to_fix_per_day, animal_type, status):
@@ -159,3 +174,9 @@ print("\nTotal shop balance: ", our_shop.get_balance())
 pet_id_to_explore = 2
 print(f"\nDetails of robot pet with id = {pet_id_to_explore} are:" )
 print(our_shop.get_robot_pet_details(pet_id_to_explore))
+
+# This should return 740 = (Initial balance) + (Sold pet3) - expenses = 1000 + 60 - 320
+# Where the expenses are: Employees daily cost (150 + 160) + pet4 repair cost (10) = 320
+our_shop.simulate_a_day()
+print("Store balance at the end of the day: ", our_shop.get_balance())
+
