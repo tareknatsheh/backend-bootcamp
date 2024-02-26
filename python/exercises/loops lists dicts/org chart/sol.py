@@ -69,13 +69,13 @@ def rec(node, workers_counter = 0, departments_list = [], is_under_CTO = False, 
     # I've assumed here that a worker would have no "subordinates"
     if "name" in node and "subordinates" not in node:
         workers_counter += 1
-    
-    # If we are under the CTO and there is no "subordinates", then this is an employee that works
-    # under the CTO:
-    if is_under_CTO and "subordinates" not in node: under_CTO_list.append(node["name"])
+        # If we are under the CTO and there is no "subordinates", then this is an employee that works
+        # under the CTO:
+        if is_under_CTO: under_CTO_list.append(node["name"])
 
-    if "develop" in node["name"].lower() and "subordinates" not in node:
-        developers.append(node["name"])
+        # is it a developer?
+        if "develop" in node["name"].lower():
+            developers.append(node["name"])
 
     # Set a flag when we reach the CTO node:
     if node["name"] == "CTO": is_under_CTO = True
@@ -88,6 +88,7 @@ def rec(node, workers_counter = 0, departments_list = [], is_under_CTO = False, 
         for item in node["subordinates"]:
             workers_counter, departments_list, is_under_CTO, under_CTO_list, developers = rec(item, workers_counter, departments_list, is_under_CTO, under_CTO_list, developers)
 
+    # Let's reset the CTO flag after finishing from all of their node children:
     if node["name"] == "CTO": is_under_CTO = False
     return workers_counter, departments_list, is_under_CTO, under_CTO_list, developers
     
