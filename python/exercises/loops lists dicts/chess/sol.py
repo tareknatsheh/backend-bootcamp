@@ -37,18 +37,16 @@ def generate_players(num_of_players):
     return players_list
 
 def print_leaderboard(players, score_system):
+    print(f"\n--- {score_system} LEADERBOARD ---")
     if score_system == "elo rank change":
-        print(f"\n--- {score_system} LEADERBOARD ---")
         sorted_players = sorted(players, key= lambda d: (d["rank"] - d["initial_rank"]), reverse=True)
         for player in sorted_players:
             print(f"{player['name']} : {player['rank'] - player['initial_rank']}")
-        print("------------------------")
     else:
-        print(f"\n--- {score_system} LEADERBOARD ---")
         sorted_players = sorted(players, key= lambda d: d[score_system], reverse=True)
         for player in sorted_players:
             print(f"{player['name']} : {player[score_system]}")
-        print("------------------------")
+    print("------------------------")
 
 def battle(p1, p2):
     rev_elo_ratio = 1 - p1["rank"]/p2["rank"]
@@ -85,18 +83,21 @@ def simulate_tournament(schedule):
                 print(f"Draw!. Adding +0.5 points to both {first_player['name']} and {second_player['name']}")
                 first_player["points"] += 0.5
                 second_player["points"] += 0.5
+                # udpate elo ranks
                 first_player["rank"] = round(first_player["rank"] + 32 * (0.5 - first_player_expected_score))
                 second_player["rank"] = round(second_player["rank"] + 32 * (0.5 - second_player_expected_score))
             elif battle_result == 1:
                 # player 1 won
                 print(f"{first_player['name']} won. Adding +1 point")
                 first_player["points"] += 1
+                # udpate elo ranks
                 first_player["rank"] = round(first_player["rank"] + 32 * (1 - first_player_expected_score))
                 second_player["rank"] = round(second_player["rank"] + 32 * (0 - second_player_expected_score))
             elif battle_result == 2:
                 # player 2 won
                 print(f"{second_player['name']} won. Adding +1 point")
                 second_player["points"] += 1
+                # udpate elo ranks
                 second_player["rank"] = round(second_player["rank"] + 32 * (1 - second_player_expected_score))
                 first_player["rank"] = round(first_player["rank"] + 32 * (0 - first_player_expected_score))
             else:
