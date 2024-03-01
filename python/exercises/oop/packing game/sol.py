@@ -1,9 +1,14 @@
 # Packing game
 
 class Item:
-    def __init__(self, name, weight):
+    def __init__(self, name, weight, category):
         self.name = name.lower()
         self.weight = weight
+        self.category = category
+        self.allowed_categories = ["misc", "electronics", "sport"]
+        if category not in self.allowed_categories:
+            raise Exception(f"Chosen category: {self.category} is not allowed")
+
         if not isinstance(self.name, str) or len(self.name) == 0:
             raise Exception("Name should be a non empty string")
         if not isinstance(self.weight, (int, float)):
@@ -18,8 +23,8 @@ class Item:
         return self.name
 
 class Product(Item):
-    def __init__(self, name, weight, other_categories = [], other_details = {}):
-        super().__init__(name, weight)
+    def __init__(self, name, weight, category, other_categories = [], other_details = {}):
+        super().__init__(name, weight, category)
         self.other_categories = other_categories
         self.other_details = other_details
     
@@ -102,22 +107,30 @@ class Bag:
         for item in self.all_items:
             yield item
     
-    def get_all_by_cat(self):
+    def get_all_by_cat(self, category):
+        for item in self.all_items:
+            if category in item.category:
+                yield item
         pass
 
 
 
 my_bag = Bag(80, 6)
-my_bag.add_item(Product("universal charger", 12.0, [Colored("black"), Priced(50), Sized("M"), Branded("Lenovo")]), 1)
-my_bag.add_item(Product("passport", 1, [Colored("blue"), Priced(50), Origined("USA")]), 1)
-my_bag.add_item(Product("sunglasses", 10, [Colored("black")]), 1)
-my_bag.add_item(Product("sneakers", 14, [Branded("new balance"), Origined("Spain")]), 1)
-my_bag.add_item(Product("smart phone", 12, [Branded("Apple"), Materialed("lithium, plastic")], {"OS": "iOS", "storage": "128 GB", "display": "AMOLED"}), 1)
-my_bag.add_item(Product("laptop", 1, [Branded("DELL")], {"Processor": "intel i7", "ram": "16 GB", "storage": "512 GB SSD", "Graphics": "NVIDIA GeForce4"}), 1)
-my_bag.add_item(Product("smart watch", 44, [Branded("Samsung")], {"Display": "Touchscreen", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
-my_bag.add_item(Product("campus", 4, [Branded("Samsung"), Priced(50), Materialed(" iron, plastic")], {"accuracy": "high", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
+my_bag.add_item(Product("universal charger", 12, "electronics", [Colored("black"), Priced(50), Sized("M"), Branded("Lenovo")]), 1)
+my_bag.add_item(Product("passport", 1, "misc", [Colored("blue"), Priced(50), Origined("USA")]), 1)
+my_bag.add_item(Product("sunglasses", 10, "sport", [Colored("black")]), 1)
+my_bag.add_item(Product("sneakers", 14, "sport", [Branded("new balance"), Origined("Spain")]), 1)
+my_bag.add_item(Product("smart phone", 12, "electronics", [Branded("Apple"), Materialed("lithium, plastic")], {"OS": "iOS", "storage": "128 GB", "display": "AMOLED"}), 1)
+my_bag.add_item(Product("laptop", 1, "electronics", [Branded("DELL")], {"Processor": "intel i7", "ram": "16 GB", "storage": "512 GB SSD", "Graphics": "NVIDIA GeForce4"}), 1)
+my_bag.add_item(Product("smart watch", 44, "electronics", [Branded("Samsung")], {"Display": "Touchscreen", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
+my_bag.add_item(Product("campus", 4, "electronics", [Branded("Samsung"), Priced(50), Materialed(" iron, plastic")], {"accuracy": "high", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
 
 print("\n")
 print("All items in the bag:")
 for prod in my_bag.get_all():
     print(prod.name)
+
+print("\n")
+print("All items by category:")
+for i in my_bag.get_all_by_cat("misc"):
+    print(i)
