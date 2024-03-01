@@ -1,12 +1,13 @@
 # Packing game
 
+allowed_categories = ["misc", "electronics", "sport"]
+
 class Item:
     def __init__(self, name, weight, category):
         self.name = name.lower()
         self.weight = weight
         self.category = category
-        self.allowed_categories = ["misc", "electronics", "sport"]
-        if category not in self.allowed_categories:
+        if category not in allowed_categories:
             raise Exception(f"Chosen category: {self.category} is not allowed")
 
         if not isinstance(self.name, str) or len(self.name) == 0:
@@ -113,24 +114,73 @@ class Bag:
                 yield item
         pass
 
+    def get_all_sort_by_cat(self):
+        sorted_items_by_cat = sorted(self.all_items, key = lambda item: item.category)
+        current_cat_to_print = ""
+        for p in sorted_items_by_cat:
+            # check if we enter a new category of items, if yes, print the category title:
+            if current_cat_to_print != p.category:
+                print('')
+                print(p.category)
+                current_cat_to_print = p.category
+            print(p.name)
+        pass
+
 
 
 my_bag = Bag(80, 6)
-my_bag.add_item(Product("universal charger", 12, "electronics", [Colored("black"), Priced(50), Sized("M"), Branded("Lenovo")]), 1)
-my_bag.add_item(Product("passport", 1, "misc", [Colored("blue"), Priced(50), Origined("USA")]), 1)
-my_bag.add_item(Product("sunglasses", 10, "sport", [Colored("black")]), 1)
-my_bag.add_item(Product("sneakers", 14, "sport", [Branded("new balance"), Origined("Spain")]), 1)
-my_bag.add_item(Product("smart phone", 12, "electronics", [Branded("Apple"), Materialed("lithium, plastic")], {"OS": "iOS", "storage": "128 GB", "display": "AMOLED"}), 1)
-my_bag.add_item(Product("laptop", 1, "electronics", [Branded("DELL")], {"Processor": "intel i7", "ram": "16 GB", "storage": "512 GB SSD", "Graphics": "NVIDIA GeForce4"}), 1)
-my_bag.add_item(Product("smart watch", 44, "electronics", [Branded("Samsung")], {"Display": "Touchscreen", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
-my_bag.add_item(Product("campus", 4, "electronics", [Branded("Samsung"), Priced(50), Materialed(" iron, plastic")], {"accuracy": "high", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}), 1)
 
-print("\n")
-print("All items in the bag:")
-for prod in my_bag.get_all():
-    print(prod.name)
+appendix_a_list = [
+    Product("universal charger", 12, "electronics", [Colored("black"), Priced(50), Sized("M"), Branded("Lenovo")]),
+    Product("passport", 1, "misc", [Colored("blue"), Priced(50), Origined("USA")]),
+    Product("sunglasses", 10, "sport", [Colored("black")]),
+    Product("sneakers", 14, "sport", [Branded("new balance"), Origined("Spain")]),
+    Product("smart phone", 12, "electronics", [Branded("Apple"), Materialed("lithium, plastic")], {"OS": "iOS", "storage": "128 GB", "display": "AMOLED"}),
+    Product("laptop", 1, "electronics", [Branded("DELL")], {"Processor": "intel i7", "ram": "16 GB", "storage": "512 GB SSD", "Graphics": "NVIDIA GeForce4"}),
+    Product("smart watch", 44, "electronics", [Branded("Samsung")], {"Display": "Touchscreen", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"}),
+    Product("campus", 4, "electronics", [Branded("Samsung"), Priced(50), Materialed(" iron, plastic")], {"accuracy": "high", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"})
+]
 
-print("\n")
-print("All items by category:")
-for i in my_bag.get_all_by_cat("misc"):
-    print(i)
+active = True
+while active:
+    user_choice = input("""\nWhat do you like to do?
+1) Show all items in the bag
+2) Show all items sorted by category
+3) Print all items from a specific category
+4) Add all items in 'APPENDIX A' to your bag
+5) Add new item from products in Appendix A to your bag
+6) Exit\n""")
+
+    if user_choice == "1":
+        print("\nAll items in the bag:\n")
+        for prod in my_bag.get_all():
+            print(prod.name)
+
+    elif user_choice == "2":
+        print("\nAll items by category:")
+        my_bag.get_all_sort_by_cat()
+    elif user_choice == "3":
+        cat_choice = input(f"What category would you like to see?\n{allowed_categories}\n")
+        print(f"\nPrint item only from category '{cat_choice}'")
+        for item in my_bag.get_all_by_cat(cat_choice):
+            print(item)
+    elif user_choice == "4":
+        for pdt in appendix_a_list:
+            my_bag.add_item(pdt, 1)
+    elif user_choice == "5":
+        print("Here are all the products in Appendix A:")
+        for item in appendix_a_list:
+            print(item)
+        print("Which one of them whould you like to add to your bag?")
+        item_to_add_user_choice = input("Please enter the name of only one of them: ")
+        found_item = list(filter(lambda c: c.name == item_to_add_user_choice, appendix_a_list))[0]
+        if found_item:
+            print("\nAdding...")
+            my_bag.add_item(found_item, 1)
+            print("")
+    elif user_choice == "6":
+        print("Exiting.....")
+        active = False
+    
+
+
