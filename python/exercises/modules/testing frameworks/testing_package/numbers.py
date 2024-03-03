@@ -1,5 +1,3 @@
-# TODO separate into other modules for lists and dicts
-
 class Numbers:
     def __init__(self):
         self.result = True

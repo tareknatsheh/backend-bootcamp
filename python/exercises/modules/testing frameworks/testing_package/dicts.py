@@ -15,7 +15,6 @@ class Dicts:
         self.result = self.result and (self.val_to_test in dict)
         return self
 
-
     def is_value_in_dict(self, dict = {}):
         self.result = self.result and (self.val_to_test in dict.values())
         return self
