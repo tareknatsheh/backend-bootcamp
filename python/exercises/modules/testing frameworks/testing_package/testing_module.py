@@ -1,38 +1,43 @@
-def is_equal(val_to_test, num):
-    if val_to_test == num:
-        return True
-    else:
-        return False
+class Testing_machine:
+    def __init__(self):
+        self.result = True
+        self.val_to_test = None
 
-def is_greater_than(val_to_test, num):
-    if val_to_test > num:
-        return True
-    else:
-        return False
+    def __str__(self):
+        return str(self.result)
 
-def is_less_than(val_to_test, num):
-    if val_to_test < num:
-        return True
-    else:
-        return False
-    
-def is_in_list(val_to_test, list = []):
-    if val_to_test in list:
-        return True
-    else:
-        return False
+    def test(self, val_to_test):
+        self.result = True # Initialize
+        self.val_to_test = val_to_test
+        return self
 
-def is_key_in_dict(val_to_test, dict = {}):
-    if val_to_test in dict:
-        return True
-    else:
-        return False
+    def is_equal(self, num):
+        self.result = self.result and (self.val_to_test == num)
+        return self
 
-def is_value_in_dict(val_to_test, dict = {}):
-    if val_to_test in dict.values():
-        return True
-    else:
-        return False
+    def is_greater_than(self, num):
+        self.result = self.result and (self.val_to_test > num)
+        return self
+
+    def is_less_than(self, num):
+        self.result = self.result and (self.val_to_test < num)
+        return self
+
+        
+    def is_in_list(self, list = []):
+        self.result = self.result and (self.val_to_test in list)
+        return self
+
+
+    def is_key_in_dict(self, dict = {}):
+        self.result = self.result and (self.val_to_test in dict)
+        return self
+
+
+    def is_value_in_dict(self, dict = {}):
+        self.result = self.result and (self.val_to_test in dict.values())
+        return self
+
 
 if __name__ == "__main__":
     print("You are running code directly")
