@@ -9,10 +9,16 @@
 # We then calculate health and fuel based on the event and the response (?)
 # If health or fuel is 0 --> user failed, ask them if they want to try again.
 
-from Spaceship import spaceship
+from Spaceship import ship
 from Galaxy import events
+import json
 
-my_ship = spaceship.Spaceship("spicy", 100, 100)
+saved_ship = ship.Spaceship.load_saved_progress()
+if not saved_ship:
+    my_ship = ship.Spaceship("spicy", 100, 100, 0)
+    my_ship.save_progress()
+else:
+    my_ship = saved_ship
 
 active = True
 launched = False
@@ -35,6 +41,7 @@ while active:
             print("Please enter 1, 2 or 3")
     else:
         an_event = events.get_event()
+        my_ship.save_progress()
         quit = my_ship.handle_event(an_event)
         if quit:
             print("\n---- Main Menu ----")
