@@ -1,4 +1,6 @@
-class Testing_machine:
+# TODO separate into other modules for lists and dicts
+
+class Numbers:
     def __init__(self):
         self.result = True
         self.val_to_test = None
@@ -21,21 +23,6 @@ class Testing_machine:
 
     def is_less_than(self, num):
         self.result = self.result and (self.val_to_test < num)
-        return self
-
-        
-    def is_in_list(self, list = []):
-        self.result = self.result and (self.val_to_test in list)
-        return self
-
-
-    def is_key_in_dict(self, dict = {}):
-        self.result = self.result and (self.val_to_test in dict)
-        return self
-
-
-    def is_value_in_dict(self, dict = {}):
-        self.result = self.result and (self.val_to_test in dict.values())
         return self
 
 
