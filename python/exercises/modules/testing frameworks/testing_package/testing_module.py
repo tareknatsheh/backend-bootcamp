@@ -34,3 +34,7 @@ def is_value_in_dict(val_to_test, dict = {}):
     else:
         return False
 
+if __name__ == "__main__":
+    print("You are running code directly")
+else:
+    print("Imported Testing Module!")
