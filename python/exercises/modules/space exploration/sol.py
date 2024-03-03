@@ -9,10 +9,10 @@
 # We then calculate health and fuel based on the event and the response (?)
 # If health or fuel is 0 --> user failed, ask them if they want to try again.
 
-from Spaceship import spaceship
+from Spaceship import ship
 from Galaxy import events
 
-my_ship = spaceship.Spaceship("spicy", 100, 100)
+my_ship = ship.Spaceship("spicy")
 
 active = True
 launched = False

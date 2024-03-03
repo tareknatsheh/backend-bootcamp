@@ -40,7 +40,7 @@ possible_events = [
             {
                 "name": "fight",
                 "health_cost_range": [-60, -10],
-                "fuel_cost_range": [-20, -10]
+                "fuel_cost_range": [-10, -5]
             },
             {
                 "name": "run away",
@@ -72,7 +72,7 @@ possible_events = [
             {
                 "name": "get it",
                 "health_cost_range": [5, 20],
-                "fuel_cost_range": [5, 20]
+                "fuel_cost_range": [10, 30]
             },
             {
                 "name": "ignore it",
