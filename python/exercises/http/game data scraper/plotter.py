@@ -21,7 +21,7 @@ def plot_tags(data):
 
     plt.show()
 
-def plot_stat_of_tag(user_input, data):
+def plot_stats_of_a_tag(user_input, data):
     if user_input in data:
         # Extract keys and values
         keys = list(data.keys())
