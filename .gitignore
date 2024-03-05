@@ -1,6 +1,7 @@
 bash course
 *.pdf
 tests
+personal/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
