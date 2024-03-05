@@ -35,10 +35,6 @@ class Spaceship:
                 print("Loading user saved progess from progress.json.....")
                 saved_progress = json.load(openfile)
                 print("Done laoading  saved progress:")
-                # self.name = saved_progress["name"]
-                # self.health = saved_progress["health"]
-                # self.fuel = saved_progress["fuel"]
-                # self.score = saved_progress["score"]
                 loaded_spaceship = Spaceship(saved_progress["name"], saved_progress["health"], saved_progress["fuel"], saved_progress["score"])
                 print(loaded_spaceship)
 
