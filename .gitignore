@@ -2,6 +2,8 @@ bash course
 *.pdf
 tests
 personal/
+data.json
+clean_data.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
