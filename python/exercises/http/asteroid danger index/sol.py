@@ -1,9 +1,8 @@
-# TODO: Separate functions into separate files
-# TODO: add a requirements file
-
 import os
 from dotenv import load_dotenv
 import http_client as h, storage as st, data_analysis as d, plotter as p
+
+# TODO: finish plotter.py
 
 load_dotenv()
 NASA_API_KEY = os.getenv("NASA_API_KEY")
