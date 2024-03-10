@@ -6,9 +6,7 @@ And for how many rounds they want the simlulation to run.
 Then the game runs the simulations round by round showing the result of each.
 
 TODO:
-finish the README.md
 finish block diagram
-create makefile
 
 """
 
