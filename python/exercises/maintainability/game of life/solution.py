@@ -1,7 +1,7 @@
 """
 Game of life
 
-It starts by letting the user decide where there is life in a 8x8 grid
+It starts by letting the user decide where there is life in a nxn grid
 And for how many rounds they want the simlulation to run.
 Then the game runs the simulations round by round showing the result of each.
 

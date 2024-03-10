@@ -25,6 +25,11 @@ def print_grid(grid_matrix: list[list]) -> None:
 
 
 def ask_user_to_add_cells(grid_size) -> list:
+    """It get's the user input then after finishing it returns a list of tuples
+    Example: [(0, 0), (5, 3), (2, 1)]
+    means that the user wants three cells, the first cell would be at row 0 col 0 in our grid
+    the second cell will be at row 5 col 3 ,... and so on
+    """
     cells_to_add_list = []
 
     print("Let's add some living cells.\ninput the row and column number of the cells you wish to create separated by a space.")
@@ -46,10 +51,14 @@ def ask_user_to_add_cells(grid_size) -> list:
     return cells_to_add_list
 
 def ask_user_how_many_rounds() -> int:
-    user_input = input("How many rounds?\n")
-    return int(user_input)
+    """ Takes and validates the required number of rounds to run the simulation """
+    user_input = int(input("How many rounds?\n"))
+    if user_input < 2 or user_input > 100:
+        raise Exception("Wrong input, number of round should be between 2 and 100")
+    return user_input
 
 def what_grid_size() -> int:
+    """ Takes and validates the size of the grid """
     user_input = input("What is the grid size?\n")
     user_input = int(user_input)
     if user_input < 2 or user_input > 10:
