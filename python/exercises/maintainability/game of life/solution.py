@@ -5,6 +5,8 @@ It starts by letting the user decide where there is life in a nxn grid
 And for how many rounds they want the simlulation to run.
 Then the game runs the simulations round by round showing the result of each.
 
+TODO: finish the README.md
+
 """
 
 from utilities import logger as log, grid, simulator as sim
