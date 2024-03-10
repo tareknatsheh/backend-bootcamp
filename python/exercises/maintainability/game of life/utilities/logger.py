@@ -37,7 +37,7 @@ def ask_user_to_add_cells(grid_size) -> list:
     take_input = True
     while take_input:
         # Let user initialize the grid with living cells
-        user_input = input("Row and column (press enter to finish):").split()
+        user_input = input("Row and column (keep empty and press enter when finished):").split()
         if isinstance(user_input, list) and len(user_input) == 2:
             row, col = user_input
             row = int(row)
