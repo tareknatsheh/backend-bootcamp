@@ -1,11 +1,6 @@
 """
 road plugin:
-constants:
-○ name
-○ terrain hardness
-○ mental effect
-○ wheel damage effect
 """
+from .Main import Road
 
-_name = "X"
-_hardness = 2
+road = Road("Begen south", 0.2, 0.2, 0.3)

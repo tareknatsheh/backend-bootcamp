@@ -26,7 +26,6 @@ constants:
 - name
 - age
 - gender
-
 variables:
 - mental health (afcted by: road "mental effect" and km driven)
 
@@ -34,7 +33,7 @@ variables:
 
 import plugins.trucks_plugins_manager as tr
 import plugins.roads_plugins_manager as rd
-from simulator import simulate
+from utils.simulator import simulate
 
 def can_truck_do_this_terrain(truck_module, terrain_obj):
     return tr.get_full_tank_km(truck_module) >= rd.get_total_km(terrain_obj)
@@ -66,6 +65,9 @@ def main():
             print("- Here we go!-")
             print("-"*10)
             simulate(my_truck, chosen_terrain)
+            
+            do_try_again = input("\nWould you like to try again? (y/n)\n").lower()
+            active = True if do_try_again == "y" else False
             # print_truck_state(new_truck_state)
             # print_driver_state(driver_mental_state)
         else:
