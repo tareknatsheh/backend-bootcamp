@@ -1,0 +1,14 @@
+[
+    {
+        "road_type": "x",
+        "length": 120
+    },
+    {
+        "road_type": "y",
+        "length": 110
+    },
+    {
+        "road_type": "y",
+        "length": 100
+    }
+]
