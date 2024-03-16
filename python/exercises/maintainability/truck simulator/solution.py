@@ -1,34 +1,7 @@
 """
 Truck Simulator (Extendability)
 
-Ask the user to pick a truck type and to provide a terrain json file
-
---- Every plugin MUST have certain methods and parameters: ---
-truck plugin:
-The constants:
-○ max fuel amount
-○ km per liter
-○ price to repair wheels per km
-○ brand
-The variables:
-- fuel (decreases after driving some km)
-- wheels fix rate (affected by the road conditions - takes a factor from the road)
-
-road plugin:
-constants:
-○ name
-○ terrain hardness
-○ mental effect
-○ wheel damage effect
-
-driver:
-constants:
-- name
-- age
-- gender
-variables:
-- mental health (afcted by: road "mental effect" and km driven)
-
+TODO: add more comments and docstring
 """
 
 import plugins.trucks_plugins_manager as tr
@@ -64,7 +37,7 @@ def main():
             print("-"*10)
             print("- Here we go!-")
             print("-"*10)
-            simulate(my_truck, chosen_terrain)
+            simulate(my_truck, chosen_terrain, {})
             
             do_try_again = input("\nWould you like to try again? (y/n)\n").lower()
             active = True if do_try_again == "y" else False
