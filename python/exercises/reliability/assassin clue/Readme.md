@@ -37,4 +37,6 @@ We will have the following main components:
 - plugins: places and weapons, as .json files
 
 ## Flow chart
+[click here for a better resolution](https://miro.com/app/board/uXjVKfr6auU=/?share_link_id=919883985147)
+
 <img src="flowchart.jpg" alt="drawing" width="600"/>
