@@ -1,6 +1,5 @@
 bash course
 *.pdf
-tests
 personal/
 data.json
 clean_data.json
