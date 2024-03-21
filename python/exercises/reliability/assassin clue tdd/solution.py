@@ -31,43 +31,31 @@ Basic actions:
 
 """
 
-from importlib import import_module
-import os
 import time
 import random
 
-from components.Player import Player
-from utils import helpers as h
+from components.Player import *
+from utils import helpers as h, printers as p
 
 
-def list_of_all_actions() -> list:
-    all_available_plugins = os.listdir("./actions")
-    all_plugins_names = [f.replace(".py","") for f in all_available_plugins if f.endswith('.py') and not f.startswith("__")]
-    plugin_modules_list = []
-    for action_name in all_plugins_names:
-        module = import_module(f"actions.{action_name}")
-        plugin_modules_list.append(module)
-    return plugin_modules_list
-
-    
 def main():
-    # Get all the available player actions from the 'actions' plugins folder
-    all_actions = list_of_all_actions()
+
+    import_places()
 
     # -- Pre-round configurations --
     # Create 4 players
-    players = h.players_creator(4, Player)
+    players = random_players_creator(4, Player)
     
     active  = True
     while active:
         # Start the game:
-        h.print_welcome()
+        p.print_welcome()
         time.sleep(1)
 
         # Reset all players (make them all alive and innocents)
-        h.reset(players)
+        reset(players)
         # Define the killer
-        killer = h.set_random_murderer(players)
+        killer = set_random_murderer(players)
 
         # At the beggining all players at alive
         alive_players = players
@@ -82,7 +70,7 @@ def main():
             # If there is only one player left, then they are the killer, and you lost
             if len(alive_players) == 2 and suspect_counter == 0:
                 session_is_active = False
-                h.print_game_over()
+                p.print_game_over()
                 active = h.do_you_want_to_play_again()
             else:
                 # When the suspect counter is 0 we know for sure that it is the start of the round
@@ -91,20 +79,20 @@ def main():
                     rounds_counter += 1
                     print(f"\n---- Round {rounds_counter} ----")
                     # Define the place of murder and the weapon
-                    murder_place = h.get_a_random_place_from_player(killer)
+                    murder_place = get_a_random_place_from_player(killer)
                     murder_weapon = random.choice(killer.list_fav_weapons)
 
                     # Kill the a victim randomly
-                    h.kill_random_player(alive_players, killer)
+                    kill_random_player(alive_players, killer)
 
                     print(f"Place of the murder: {murder_place}\nWeapon found in crime scene: {murder_weapon}")
                     time.sleep(2)
 
                     # Put the alive players in a list
-                    alive_players = h.filter_alive_players(players)
+                    alive_players = filter_alive_players(players)
 
                     # Show alive players to the user:
-                    h.list_names(alive_players)
+                    p.list_names(alive_players)
 
                 # give the option to choose one to 'suspect' or 'accuse' and handle the choice
                 if suspect_counter < 2:
@@ -123,7 +111,7 @@ def main():
                         is_accusation_correct, accused_player = h.accuse(alive_players)
                         if is_accusation_correct:
                             session_is_active = False
-                            h.print_congrats()
+                            p.print_congrats()
                             print("session is active: ", session_is_active)
                             active = h.do_you_want_to_play_again()
                         else:
@@ -138,7 +126,7 @@ def main():
                         is_accusation_correct, accused_player = h.accuse(alive_players)
                         if is_accusation_correct:
                             session_is_active = False
-                            h.print_congrats()
+                            p.print_congrats()
                             active = h.do_you_want_to_play_again()
                         else:
                             print(f"Wrong accusation! {accused_player.name}")
