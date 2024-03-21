@@ -1,17 +1,6 @@
 import random
-import os
-from importlib import import_module
 from components.Player import Player
 
-
-def list_of_all_actions() -> list:
-    all_available_plugins = os.listdir("./actions")
-    all_plugins_names = [f.replace(".py","") for f in all_available_plugins if f.endswith('.py') and not f.startswith("__")]
-    plugin_modules_list = []
-    for action_name in all_plugins_names:
-        module = import_module(f"actions.{action_name}")
-        plugin_modules_list.append(module)
-    return plugin_modules_list
 
 def investigate_suspect(player_num: int, alive_players: list[Player]):
     # validate:

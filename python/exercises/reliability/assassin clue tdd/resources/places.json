@@ -1,22 +1,24 @@
-[
-    "Glenview",
-    "Brookside",
-    "Maplewood",
-    "Oakridge",
-    "Hillcrest",
-    "Greenfield",
-    "Riverdale",
-    "Lakeview",
-    "Pinecrest",
-    "Willowbrook",
-    "Sunnydale",
-    "Clearwater",
-    "Meadowbrook",
-    "Fairview",
-    "Springvale",
-    "Woodland",
-    "Valleyview",
-    "Cedarwood",
-    "Sunset",
-    "Stonegate"
-]
+{
+    "places": [
+        "Glenview",
+        "Brookside",
+        "Maplewood",
+        "Oakridge",
+        "Hillcrest",
+        "Greenfield",
+        "Riverdale",
+        "Lakeview",
+        "Pinecrest",
+        "Willowbrook",
+        "Sunnydale",
+        "Clearwater",
+        "Meadowbrook",
+        "Fairview",
+        "Springvale",
+        "Woodland",
+        "Valleyview",
+        "Cedarwood",
+        "Sunset",
+        "Stonegate"
+    ]
+}

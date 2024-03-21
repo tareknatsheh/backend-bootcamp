@@ -1,12 +1,14 @@
-[
-    "Revolver",
-    "Candlestick",
-    "Lead Pipe",
-    "Knife",
-    "Wrench",
-    "Rope",
-    "Poison",
-    "Horseshoe",
-    "Sword",
-    "Dagger"
-]
+{
+    "weapons": [
+        "Revolver",
+        "Candlestick",
+        "Lead Pipe",
+        "Knife",
+        "Wrench",
+        "Rope",
+        "Poison",
+        "Horseshoe",
+        "Sword",
+        "Dagger"
+    ]
+}

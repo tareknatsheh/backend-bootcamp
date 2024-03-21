@@ -39,14 +39,12 @@ from utils import helpers as h, printers as p
 
 
 def main():
-    # Get all the available player actions from the 'actions' plugins folder
-    all_actions = h.list_of_all_actions()
-    for item in all_actions:
-        print(item.get_name())
+
+    import_places()
 
     # -- Pre-round configurations --
     # Create 4 players
-    players = players_creator(4, Player)
+    players = random_players_creator(4, Player)
     
     active  = True
     while active:

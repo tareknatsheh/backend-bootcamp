@@ -1,5 +1,7 @@
 import random
+from plugins import readers as r
 from typing import Type
+import pathlib
 
 class Player:
     def __init__(self, name: str,list_visited_places: list, list_fav_weapons: list):
@@ -44,19 +46,41 @@ class Player:
         else:
             raise Exception(f"{self.name} is already set as the murderer")
         
+
+def import_places():
+    file_path = pathlib.Path("./resources/places.json")
+    data = r.json(file_path)
+    return list(data["places"])
+
+def import_weapons():
+    file_path = pathlib.Path("./resources/weapons.json")
+    data = r.json(file_path)
+    return list(data["weapons"])
+
+def import_bot_names():
+    file_path = pathlib.Path("./resources/bots.json")
+    data = r.json(file_path)
+    return list(data["bots"])
+
+def get_n_random_items_from_list(the_list, n: int) -> list[str]:
+    return random.sample(the_list, n)
+    
+def get_one_random_item(the_list) -> str:
+    return random.choice(the_list)
+
 def reset(players):
     for player in players:
         player.is_murderer = False
         player.is_dead = False
 
-def players_creator(n, Player: Type[Player]) -> list[Player]:
-    p1 = Player("Will Smith", ["Jerusalem","Ramallah","Haifa"], ["Revolver", "Candlestick"])
-    p2 = Player("John Wick", ["Glenview","Brookside","Maplewood"], ["Wrench", "Candlestick"])
-    p3 = Player("Hosam", ["Greenfield", "Riverdale", "Lakeview"], ["Sword", "Dagger"])
-    p4 = Player("Goku", ["Clearwater", "Meadowbrook", "Fairview"], ["Wrench", "Revolver"])
+def random_players_creator(n, Player: Type[Player]) -> list[Player]:
+    players_list = []
+    random_names_list = get_n_random_items_from_list(import_bot_names(), n)
 
-    alive_players = [p1, p2, p3, p4]
-    return alive_players
+    for _ in range(n):
+        players_list.append(Player(random_names_list.pop(), get_n_random_items_from_list(import_places(), 3), get_n_random_items_from_list(import_weapons(), 2)))
+
+    return players_list
 
 def set_random_murderer(players_list: list[Player]):
     killer = random.choice(players_list)
