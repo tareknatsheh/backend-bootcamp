@@ -1,7 +1,9 @@
 """
 Truck Simulator (Extendability)
 
-TODO: add more comments and docstring
+TODO:
+add more comments and docstring
+create block diagram and add it to Readme.md
 """
 
 import plugins.trucks_plugins_manager as tr
