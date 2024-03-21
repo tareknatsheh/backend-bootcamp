@@ -1,4 +1,5 @@
 import random
+from typing import Type
 
 class Player:
     def __init__(self, name: str,list_visited_places: list, list_fav_weapons: list):
@@ -42,3 +43,41 @@ class Player:
             self.is_murderer = True
         else:
             raise Exception(f"{self.name} is already set as the murderer")
+        
+def reset(players):
+    for player in players:
+        player.is_murderer = False
+        player.is_dead = False
+
+def players_creator(n, Player: Type[Player]) -> list[Player]:
+    p1 = Player("Will Smith", ["Jerusalem","Ramallah","Haifa"], ["Revolver", "Candlestick"])
+    p2 = Player("John Wick", ["Glenview","Brookside","Maplewood"], ["Wrench", "Candlestick"])
+    p3 = Player("Hosam", ["Greenfield", "Riverdale", "Lakeview"], ["Sword", "Dagger"])
+    p4 = Player("Goku", ["Clearwater", "Meadowbrook", "Fairview"], ["Wrench", "Revolver"])
+
+    alive_players = [p1, p2, p3, p4]
+    return alive_players
+
+def set_random_murderer(players_list: list[Player]):
+    killer = random.choice(players_list)
+    killer.is_murderer = True
+    return killer
+
+def get_a_random_place_from_player(player: Player) -> str:
+    return random.choice(player.list_visited_places)
+
+def kill_random_player(players, killer):
+    innocents = [player for player in players if player.is_murderer == False]
+    killer.kill(random.choice(innocents))
+
+def filter_alive_players(players: list[Player]) -> list:
+    return [alive_player for alive_player in players if alive_player.is_dead == False]
+
+def get_player_by_num(player_num: int, players_list: list[Player]):
+    # player_num is not the index, it's index-1
+    # validate:
+    if player_num > len(players_list) or player_num < 1:
+        print(f"Please put a number between 1 - {len(players_list)}")
+        print(f"{player_num} - {len(players_list)}")
+        raise Exception("wrong input") # TODO: handle it
+    return players_list[player_num-1]
