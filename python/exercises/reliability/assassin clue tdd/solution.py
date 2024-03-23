@@ -37,7 +37,6 @@ import random
 from components.Player import *
 from utils import helpers as h, printers as p
 
-
 def main():
 
     import_places()
@@ -124,20 +123,17 @@ def main():
                     if user_choice == "y":
                         # Handle the accusation, and decide to end the game or to continue
                         is_accusation_correct, accused_player = h.accuse(alive_players)
+                        # If accuse: if player is the killer --> you win! finish the game and ask if user wants to play again
                         if is_accusation_correct:
                             session_is_active = False
                             p.print_congrats()
                             active = h.do_you_want_to_play_again()
                         else:
+                            # If accuse: if player is innocent --> the round is immediatly finishes and the next one starts
                             print(f"Wrong accusation! {accused_player.name}")
                     else:
                         print("-- No player was accused, let's start the next round --")
 
-        # If accuse: if player is the killer --> you win! finish the game and ask if user wants to play again
-        # If accuse: if player is innocent --> the round is immediatly finishes and the next one starts
-
-
-        # active  = False
     print("Bye bye")
     pass
 
