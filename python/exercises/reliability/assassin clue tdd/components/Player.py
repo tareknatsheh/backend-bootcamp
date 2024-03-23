@@ -3,6 +3,8 @@ from plugins import readers as r
 from typing import Type
 import pathlib
 
+RESOURCES_FOLDER = "resources"
+
 class Player:
     def __init__(self, name: str,list_visited_places: list, list_fav_weapons: list):
         if len(name) == 0: raise Exception("Name should not be empty")
@@ -47,18 +49,18 @@ class Player:
             raise Exception(f"{self.name} is already set as the murderer")
         
 
-def import_places():
-    file_path = pathlib.Path("./resources/places.json")
+def import_places(folder_name = RESOURCES_FOLDER, file_name = "places.json"):
+    file_path = pathlib.Path(f"./{folder_name}/{file_name}")
     data = r.json(file_path)
     return list(data["places"])
 
-def import_weapons():
-    file_path = pathlib.Path("./resources/weapons.json")
+def import_weapons(folder_name = RESOURCES_FOLDER, file_name = "weapons.json"):
+    file_path = pathlib.Path(f"./{folder_name}/{file_name}")
     data = r.json(file_path)
     return list(data["weapons"])
 
-def import_bot_names():
-    file_path = pathlib.Path("./resources/bots.json")
+def import_bot_names(folder_name = RESOURCES_FOLDER, file_name = "bots.json"):
+    file_path = pathlib.Path(f"./{folder_name}/{file_name}")
     data = r.json(file_path)
     return list(data["bots"])
 
