@@ -7,9 +7,10 @@ class Item:
         self.name = name.lower()
         self.weight = weight
         self.category = category
+        # better to put the error before the assignment
         if category not in allowed_categories:
             raise Exception(f"Chosen category: {self.category} is not allowed")
-
+         # better to put the error before the assignment
         if not isinstance(self.name, str) or len(self.name) == 0:
             raise Exception("Name should be a non empty string")
         if not isinstance(self.weight, (int, float)):
@@ -19,10 +20,10 @@ class Item:
 
     def get_weight(self):
         return self.weight
-    
+    # why do we need __str__?
     def __str__(self):
         return self.name
-
+# good organization
 class Product(Item):
     def __init__(self, name, weight, category, other_categories = [], other_details = {}):
         super().__init__(name, weight, category)
@@ -141,6 +142,7 @@ appendix_a_list = [
     Product("campus", 4, "electronics", [Branded("Samsung"), Priced(50), Materialed(" iron, plastic")], {"accuracy": "high", " Battery Life": "3 days", " Fitness Features": "Heart Rate Monitor", "Connectivity": "Bluetooth"})
 ]
 
+# good ui/ux!
 active = True
 while active:
     user_choice = input("""\nWhat do you like to do?
