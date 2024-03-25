@@ -9,7 +9,7 @@ b) handling the following requests from outside:
 
 Data in the database file data.json is like this:
 {
-    "total_num_of_rabbits": 23,
+    "new_records": [{record 7}, {record 8}],
     "logs": [
         {record 1},
         {record 2},
@@ -20,43 +20,46 @@ Data in the database file data.json is like this:
 When there is a write request: it handles the data validation and returns a status message when it's done
 
 It provides the following endpoints as a form of functions:
-get_total_num_rabbits() -> int
-post_record({record}) -> dict
+get_logs() -> list[dict]
+get_new_records() -> list[dict]  : it automatically deletes records when they are read
+post_record({record}) -> dict   : posts it into both "logs" and "new_records"
 
-When post_record is called, don't update the databse but rather:
-put them in a "cache" list. Then, when total items in the cache is >= 10:
-    loop over them and update the "total_num_of_rabbits" at the end and store them in "logs"
 
 """
 import json
 import DB.utils.json_wrapper as wrapper
 
 _DB_DIR = "./DB/data.json"
-# _data_cache = dict()
-
 
 @wrapper.db_decorator
-def _read_data_to_file(file_path):
+def _read_data_from_file(file_path):
     # global _data_cache
     with open(file_path) as f:
         data = f.read()
         # _data_cache = data
-        return data
+        return json.loads(data)
 
 @wrapper.db_decorator
-def _write_data_to_file(file_path, record):
+def _write_data_to_file(file_path: str, record: dict) -> None:
     with open(file_path, "r+") as f:
         f.seek(0)
         content = f.read()
         content = json.loads(content)
         content["logs"].append(record)
+        content["new_records"].append(record)
         f.seek(0)        
         json.dump(content,f, indent=4, sort_keys=True)
         f.truncate()
 
 
-def get_data() -> str:
-    return _read_data_to_file(_DB_DIR)
+def _get_data():
+    return _read_data_from_file(_DB_DIR)
+
+def get_logs():
+    return _get_data()["logs"]
+
+def get_new_records():
+    return _get_data()["new_records"]
 
 def post_data(record: dict) -> str:
     response = {
@@ -72,3 +75,27 @@ def post_data(record: dict) -> str:
         }
 
     return str(response)
+
+@wrapper.db_decorator
+def reset_new_records_list() -> None:
+    with open(_DB_DIR, "r+") as f:
+        f.seek(0)
+        content = f.read()
+        content = json.loads(content)
+        content["new_records"].clear()
+        print("new cleared list:", content["new_records"])
+        f.seek(0)        
+        json.dump(content,f, indent=4, sort_keys=True)
+        f.truncate()
+
+def reset_all() -> None:
+    print("Resetting all data")
+    with open(_DB_DIR, "r+") as f:
+        f.seek(0)
+        content = f.read()
+        content = json.loads(content)
+        content["logs"].clear()
+        content["new_records"].clear()
+        f.seek(0)        
+        json.dump(content,f, indent=4, sort_keys=True)
+        f.truncate()

@@ -26,14 +26,15 @@ after generating a record immediatly call the DB API to insert the record
 import time
 from datetime import datetime
 from random import randint
+
 import sys
 import os
-
 # Remove these two lines after finishing the development of thid module
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
 from DB import db
+from fail_handler.db_handle import handle_failure
 
 def generate_record() -> dict:
     timestamp = datetime.now()
@@ -44,13 +45,13 @@ def generate_record() -> dict:
         "death_count": randint(0, 10)
     }
 
-def sensor():
+def sensor() -> None:
     records_counter = 0
     while records_counter < 200:
         # Generate
         new_record = generate_record()
         # Send to database
-        post_response = db.post_data(new_record)
+        post_response = handle_failure(db.post_data, 5,new_record)
         print(post_response)
 
         records_counter += 1
