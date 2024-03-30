@@ -13,3 +13,10 @@ The platform allow users to post messages, follow other users, and view a timeli
 python main.py
 ```
 
+## Performance improvement changes
+in class **SocialMediaPlatform**: method **register_user**
+
+1. Registering 50,000 new users:
+- Before: 41 seconds
+- After: 0.042 seconds
+

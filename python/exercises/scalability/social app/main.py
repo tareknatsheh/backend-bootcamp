@@ -1,22 +1,19 @@
 from social_media import SocialMediaPlatform
+import time
 
 def main():
 
+    start = time.perf_counter()
+
     my_plat = SocialMediaPlatform()
 
-    my_plat.register_user("tarek")
-    my_plat.register_user("ahmad")
+    users_list = []
+    for i in range(50000):
+        users_list.append(my_plat.register_user(f"user{i}"))
 
-    tarek = my_plat.get_user_by_username("tarek")
-    ahmad = my_plat.get_user_by_username("ahmad")
+    end = time.perf_counter()
 
-
-    if tarek and ahmad:
-        tarek.post_message("Hello from the other side")
-        tarek.post_message("what is this place!?")
-        ahmad.follow(tarek)
-        ahmad_tl = my_plat.generate_timeline("ahmad")
-        print(ahmad_tl)
+    print(f"It took {end-start} seconds")
 
     pass
 

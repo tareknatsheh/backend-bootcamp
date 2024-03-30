@@ -5,9 +5,9 @@ class SocialMediaPlatform:
         """Constructor
         the platform is initialized with an empty list of users
         """
-        self.users: list = []
+        self.users: dict = dict()
 
-    def register_user(self, username: str) -> None:
+    def register_user(self, username: str) -> User | None:
         """Registering a user addes them to the users list
 
         Args:
@@ -15,7 +15,8 @@ class SocialMediaPlatform:
         """
         if not self._is_username_taken(username):
             user = User(username)
-            self.users.append(user)
+            self.users[username] = user
+            return user
 
     def _is_username_taken(self, username: str) -> bool:
         """An internal method that checks the existance of a specific user
@@ -26,10 +27,9 @@ class SocialMediaPlatform:
         Returns:
             bool: True if exists False otherwise
         """
-        for user in self.users:
-            if user.username == username:
-                return True
-        return False
+        if username not in self.users:
+            return False
+        return True
 
     def get_user_by_username(self, username: str) -> User | None:
         """returns the User object of a specific user if found
