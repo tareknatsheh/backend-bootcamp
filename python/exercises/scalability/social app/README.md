@@ -20,6 +20,18 @@ in class **SocialMediaPlatform**: method **register_user**
 - Before: 41 seconds
 - After: 0.042 seconds
 
+
 2. Finding a user in a 50,000 users pool:
 - Before: 0.003 seconds
-- After:
+- After: 0.0000025 seconds
+
+
+3. Generating a timeline for a user that is following 500 users, where each user has 500 posts
+- Before: 5.2 seconds
+- After: 1.02 seconds
+
+It was done by making self.users a dict with the unique usernames as the keys instead of a list of dicts.
+this way you don't need to loop over all of the list items until you find the target user.
+
+Also, the same approuch was done for the posts list.
+It was converted from a list of objects/posts to a dictionary with the unique usernames as the keys

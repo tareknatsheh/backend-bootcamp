@@ -40,10 +40,9 @@ class SocialMediaPlatform:
         Returns:
             User | None: The target User object, or None if it does not exist
         """
-        for user in self.users:
-            if user.username == username:
-                return user
-        return None
+        if username not in self.users:
+            return None
+        return self.users[username]
 
     def generate_timeline(self, username: str):
         """creates a list of posts of users the User is following
@@ -60,7 +59,6 @@ class SocialMediaPlatform:
 
         timeline = []
         for followed_user in user.following:
-            for post in posts:
-                if post['username'] == followed_user.username:
-                    timeline.append(post)
+            if followed_user in posts:
+                timeline = timeline + posts[followed_user]
         return timeline
