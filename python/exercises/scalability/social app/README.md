@@ -20,3 +20,6 @@ in class **SocialMediaPlatform**: method **register_user**
 - Before: 41 seconds
 - After: 0.042 seconds
 
+2. Finding a user in a 50,000 users pool:
+- Before: 0.003 seconds
+- After:
