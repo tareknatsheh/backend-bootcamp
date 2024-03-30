@@ -7,11 +7,16 @@ def main():
     my_plat.register_user("tarek")
     my_plat.register_user("ahmad")
 
-    target_user = my_plat.get_user_by_username("tarek")
+    tarek = my_plat.get_user_by_username("tarek")
+    ahmad = my_plat.get_user_by_username("ahmad")
 
-    if target_user:
-        print(target_user.username)
-        print(target_user.following)
+
+    if tarek and ahmad:
+        tarek.post_message("Hello from the other side")
+        tarek.post_message("what is this place!?")
+        ahmad.follow(tarek)
+        ahmad_tl = my_plat.generate_timeline("ahmad")
+        print(ahmad_tl)
 
     pass
 

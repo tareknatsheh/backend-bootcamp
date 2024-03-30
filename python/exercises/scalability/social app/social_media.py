@@ -1,5 +1,4 @@
-from user import User
-posts = []
+from user import User, posts
 
 class SocialMediaPlatform:
     def __init__(self) -> None:
@@ -62,6 +61,6 @@ class SocialMediaPlatform:
         timeline = []
         for followed_user in user.following:
             for post in posts:
-                if post['username'] == followed_user:
+                if post['username'] == followed_user.username:
                     timeline.append(post)
         return timeline
