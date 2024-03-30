@@ -7,11 +7,12 @@ class LoadBalancer:
     def __init__(self, event_generator, servers_farm, max_concurrent_events=10):
         self.event_generator = event_generator
         self.servers_farm = servers_farm
-        self.event_queue = asyncio.Queue(max_concurrent_events)  # Limit the number of events being processed concurrently
+        # Limit the number of events being processed concurrently
+        self.event_queue = asyncio.Queue(max_concurrent_events)
 
     async def get_server_with_least_load(self, servers: list):
         loads = [s.get_current_load() for s in servers]
-        print(f"Server loads: {loads}")  # Debugging: Print current loads
+        print(f"Server loads: {loads}")
         least_loaded_server = servers[loads.index(min(loads))]
         return least_loaded_server
 
@@ -20,17 +21,21 @@ class LoadBalancer:
         while True:
             event = await self.event_queue.get()
             handling_server = await self.get_server_with_least_load(self.servers_farm)
-            await handling_server.process_request(event)
+            is_ok = await handling_server.process_request(event)
             self.event_queue.task_done()
+            if not is_ok:
+                print("Failed to handle one of the events!")
+                print("Failed server is:", handling_server)
 
     async def produce_events(self):
         for event in self.event_generator.generate_events():
-            await self.event_queue.put(event)  # Place the event in the queue to be processed
+            # put in queue
+            await self.event_queue.put(event)
 
     async def process_events(self):
         # Start event processing tasks
         tasks = [asyncio.create_task(self.process_event()) for _ in range(len(self.servers_farm))]
-        producer_task = asyncio.create_task(self.produce_events())  # Start event production task
+        producer_task = asyncio.create_task(self.produce_events()) 
 
         await asyncio.gather(producer_task)  # Wait for the producer task to finish
         await self.event_queue.join()  # Wait for all items in the queue to be processed
