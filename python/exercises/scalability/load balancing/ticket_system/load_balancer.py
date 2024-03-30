@@ -7,8 +7,9 @@ class LoadBalancer:
     def __init__(self, event_generator, servers_farm, max_concurrent_events=10):
         self.event_generator = event_generator
         self.servers_farm = servers_farm
+        ### looks chatgpt-ish
         self.event_queue = asyncio.Queue(max_concurrent_events)  # Limit the number of events being processed concurrently
-
+    ### why make this function async?
     async def get_server_with_least_load(self, servers: list):
         loads = [s.get_current_load() for s in servers]
         print(f"Server loads: {loads}")  # Debugging: Print current loads
@@ -31,7 +32,7 @@ class LoadBalancer:
         # Start event processing tasks
         tasks = [asyncio.create_task(self.process_event()) for _ in range(len(self.servers_farm))]
         producer_task = asyncio.create_task(self.produce_events())  # Start event production task
-
+        
         await asyncio.gather(producer_task)  # Wait for the producer task to finish
         await self.event_queue.join()  # Wait for all items in the queue to be processed
 
@@ -41,6 +42,7 @@ class LoadBalancer:
 # Example usage:
 if __name__ == "__main__":
     request_generator = RequestGenerator()
+    ### this is hardcoded with magic numbers
     server1 = S1("tickets.json", max_requests_per_time=10, requests_threshold_delay=3, max_concurrent_requests=5)
     server2 = S2("tickets.json", max_requests_per_time=10, requests_threshold_delay=3, max_concurrent_requests=5)
     
