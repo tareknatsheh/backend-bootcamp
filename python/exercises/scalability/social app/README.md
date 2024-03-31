@@ -14,21 +14,36 @@ python main.py
 ```
 
 ## Performance improvement changes
-in class **SocialMediaPlatform**: method **register_user**
+in classes **SocialMediaPlatform** and **User** methods and data structures were changed to
+get a better performance
 
 1. Registering 50,000 new users:
 - Before: 41 seconds
+
+    O(n) because it needed to loop over all of the existing users to make sure that the username is unique
+
 - After: 0.042 seconds
+
+    O(1) after using a hashtable
 
 
 2. Finding a user in a 50,000 users pool:
 - Before: 0.003 seconds
+
+    O(n)
+
 - After: 0.0000025 seconds
 
+    O(1)
 
 3. Generating a timeline for a user that is following 500 users, where each user has 500 posts
 - Before: 5.2 seconds
+
+    O(n^2)
+
 - After: 1.02 seconds
+
+    O(n)
 
 It was done by making self.users a dict with the unique usernames as the keys instead of a list of dicts.
 this way you don't need to loop over all of the list items until you find the target user.
