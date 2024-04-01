@@ -1,0 +1,62 @@
+{
+    "students": [
+        {
+            "name": "John",
+            "id": 1,
+            "age": 16,
+            "classes": [
+                "math",
+                "science",
+                "english"
+            ]
+        },
+        {
+            "name": "Sarah",
+            "id": 2,
+            "age": 17,
+            "classes": [
+                "history",
+                "biology",
+                "french"
+            ]
+        },
+        {
+            "name": "Michael",
+            "id": 3,
+            "age": 16,
+            "classes": [
+                "art",
+                "math",
+                "physics"
+            ]
+        },
+        {
+            "name": "Emily",
+            "id": 4,
+            "age": 15,
+            "classes": [
+                "science",
+                "french",
+                "art"
+            ]
+        },
+        {
+            "name": "David",
+            "id": 5,
+            "age": 17,
+            "classes": [
+                "biology",
+                "history",
+                "art"
+            ]
+        },
+        {
+            "name": "Nader",
+            "id": 20,
+            "age": 45,
+            "classes": [
+                "biology"
+            ]
+        }
+    ]
+}
