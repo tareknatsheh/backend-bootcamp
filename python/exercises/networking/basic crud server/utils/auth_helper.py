@@ -70,20 +70,6 @@ def verify_jwt(user_jwt):
 async def verify_admin(token: Annotated[str, Header(...)]):
     role = verify_jwt(token)
     return role == "admin"
-        # raise HTTPException(status_code=401, detail="You don't have permission")
-    
+
 async def verify_user(token: Annotated[str, Header(...)]):
     verify_jwt(token)
-    
-
-
-# def check_token(request):
-#         auth_header = request.headers.get('authorization')
-#         if auth_header and auth_header.startswith("Bearer "):
-#             token = auth_header.split(" ")[1]
-#             try:
-#                 if verify_jwt(token):
-#                     return request
-#             except Exception as e:
-#                 raise e
-#         return
