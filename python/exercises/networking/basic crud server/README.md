@@ -21,6 +21,11 @@ Run the server using `uvicorn`
 uvicorn server:app --reload
 ```
 
+If you want to run the tests
+```bash
+python -m pytest
+```
+
 ## Demo
 There is a .json database with sample users.
 To test admin privliges, sign in using the following user:

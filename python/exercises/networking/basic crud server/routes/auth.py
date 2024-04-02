@@ -20,7 +20,7 @@ def sign_up(body:Auth_Model) -> dict[str, str]:
 
     user_creation_result = auth.add_new_user(body.username, body.password)
     if not user_creation_result:
-        raise HTTPException(status_code=401, detail="Wrong username or password")
+        raise HTTPException(status_code=400, detail="User creation failed")
     
     # let's create a JWT token for the user
     jwt_token = auth.generate_jwt_token({"role": "guest"})

@@ -24,6 +24,10 @@ def get_user(username) -> dict | None:
     return None
 
 def add_new_user(username: str, password: str, role: str = "guest") -> bool:
+    if len(username) < 3:
+        raise HTTPException(status_code=400, detail="username must be at least 3 characters")
+    if len(password) < 3:
+        raise HTTPException(status_code=400, detail="password must be at least 3 characters")
     try:
         all_users = db.get_data(AUTH_USERS_DB)
         all_users[username] = {
@@ -47,11 +51,6 @@ def get_data(file_path):
         data = json.load(f)
         return data
 
-def find_user(username) -> dict:
-    all_users: dict = get_data(AUTH_USERS_DB)
-    if username not in all_users:
-        raise Exception("User not found")
-    return all_users[username]
 
 def verify_password(stored, from_user) -> bool:
     return bcrypt.checkpw(from_user.encode('utf-8'), stored.encode('utf-8'))
