@@ -4,10 +4,10 @@ import time
 class RequestGenerator:
     def __init__(self):
         self.events_range = (1, 5)  # Range of events to generate
-        self.time_range = (0.5, 2)  # Range of time intervals between event generation (in seconds)
+        self.time_range = (2, 0.5)  # Range of time intervals between event generation (in seconds)
         self.event_list = ["Concert", "Sports Game", "Theater Show", "Movie Premiere"]
 
-    def generate_events(self):
+    async def generate_events(self):
         while True:
             num_events = random.randint(*self.events_range)
             for _ in range(num_events):
@@ -21,5 +21,5 @@ class RequestGenerator:
 if __name__ == "__main__":
     request_generator = RequestGenerator()
 
-    for event in request_generator.generate_events():
-        print("Generated ticket sale request:", event)
+    # async for event in request_generator.generate_events():
+    #     print("Generated ticket sale request:", event)

@@ -7,7 +7,7 @@ class User:
         """Constructor
 
         Args:
-            username (str): every user must have a username
+            username (str): every user must have a unique username
         """
         self.username = username
         self.following: list[str] = []
@@ -22,7 +22,7 @@ class User:
             self.following.append(other_user)
 
     def post_message(self, message: str) -> None:
-        """A user can post a message, with is a string added to the 'posts' global vaiable
+        """A user can post a message, which is a string added to the 'posts' global vaiable
 
         Args:
             message (str): the message

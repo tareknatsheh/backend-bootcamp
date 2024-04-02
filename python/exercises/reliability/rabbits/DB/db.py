@@ -78,7 +78,7 @@ def post_data(record: dict) -> str:
 
 @wrapper.db_decorator
 def reset_new_records_list() -> None:
-    with open(_DB_DIR, "r+") as f:
+    with open(_DB_DIR, "w") as f:
         f.seek(0)
         content = f.read()
         content = json.loads(content)

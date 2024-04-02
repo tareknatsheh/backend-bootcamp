@@ -26,7 +26,6 @@ get a better performance
 
     O(1) after using a hashtable
 
-
 2. Finding a user in a 50,000 users pool:
 - Before: 0.003 seconds
 
