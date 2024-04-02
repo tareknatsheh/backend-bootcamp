@@ -1,28 +1,46 @@
 import utils.db_helper as db
-import jwt
+from decouple import config
+import bcrypt
 import json
+import jwt
+from fastapi import  Header, HTTPException
+from typing import Annotated
 
+
+JWT_SECRET = config("secret")
 AUTH_USERS_DB = "./data/auth_db.json"
 
-def add_auth_user(new_user):
-    with open(AUTH_USERS_DB, "r+") as f:
-        f.seek(0)
-        all_users = json.load(f)
+def hash_password(password: str) -> bytes:
+    bytes = password.encode('utf-8') 
+    salt = bcrypt.gensalt() 
+    hash = bcrypt.hashpw(bytes, salt)
+    return hash
 
-        if new_user["username"] in all_users:
-            raise Exception("User already exists")
-        # add the user
-        user_obj = {
-            "username": new_user["username"],
-            "password": new_user["password"]
+
+def get_user(username) -> dict | None:
+    all_users = db.get_data(AUTH_USERS_DB)
+    if username in all_users:
+        return all_users[username]
+    return None
+
+def add_new_user(username: str, password: str, role: str = "guest") -> bool:
+    try:
+        all_users = db.get_data(AUTH_USERS_DB)
+        all_users[username] = {
+            "username": username,
+            "password": hash_password(password).decode('utf-8'),
+            "role": role
         }
-        all_users[new_user["username"]] = user_obj
-        
-        f.seek(0)        
-        json.dump(all_users,f, indent=4)
-        f.truncate()
-        
-        return new_user
+        db.write_data(AUTH_USERS_DB, all_users)
+        return True
+    except Exception as error:
+        print(f"Error: {error}")
+        return False
+
+
+def generate_jwt_token(payload) -> str:
+    token: str = jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+    return token
 
 def get_data(file_path):
     with open(file_path) as f:
@@ -36,35 +54,28 @@ def find_user(username) -> dict:
     return all_users[username]
 
 def verify_password(stored, from_user) -> bool:
-    return stored == from_user
+    return bcrypt.checkpw(from_user.encode('utf-8'), stored.encode('utf-8'))
 
-# def verify_password(stored_pass, user_pass):
-#     return stored_pass == user_pass
 
-# def prepare_new_user_data(password,username):
+def verify_jwt(user_jwt):
+    try:
+        data = jwt.decode(user_jwt, JWT_SECRET, algorithms=["HS256"])
+        return data["role"]
+    except Exception as e:
+        print('error: ', e)
+        print("bad token")
+        raise HTTPException(status_code=498, detail="Invalid token")
 
-#     current_db = db.get_all(AUTH_USERS_DB, "")
-#     current_db[username] = {
-#         "username":username,
-#         "password": hashed_password
-#     }
-#     return current_db
 
-# def generate_jwt(payload):
-#     SECRET_KEY = "your-secret-key"
-#     encoded_jwt = jwt.encode(payload, SECRET_KEY, algorithm="HS256")   
-#     print('encoded_jwt: ', encoded_jwt)
-#     return encoded_jwt
+async def verify_admin(token: Annotated[str, Header(...)]):
+    role = verify_jwt(token)
+    return role == "admin"
+        # raise HTTPException(status_code=401, detail="You don't have permission")
+    
+async def verify_user(token: Annotated[str, Header(...)]):
+    verify_jwt(token)
+    
 
-# def verify_jwt(user_jwt):
-#     try:
-#         SECRET_KEY = "your-secret-key"
-#         data = jwt.decode(user_jwt, SECRET_KEY, algorithms="HS256")
-#         return data["user role"]
-#     except Exception as e:
-#         print('e: ', e)
-#         print("bad token")
-#         return False
 
 # def check_token(request):
 #         auth_header = request.headers.get('authorization')

@@ -5,6 +5,13 @@ def get_data(file_path):
         data = json.load(f)
         return data
 
+def write_data(file_path, data):
+    with open(file_path, "r+") as f:
+        f.seek(0)        
+        json.dump(data,f, indent=4)
+        f.truncate()
+        return True
+
 def get_all_students(file_path):
     data = get_data(file_path)
     return data["students"]
@@ -34,4 +41,3 @@ def add_student(file_path, new_student):
         f.truncate()
         
         return new_student
-
