@@ -3,12 +3,12 @@ from user import User, posts
 class SocialMediaPlatform:
     def __init__(self) -> None:
         """Constructor
-        the platform is initialized with an empty list of users
+        the platform is initialized with an empty dict
         """
         self.users: dict = dict()
 
     def register_user(self, username: str) -> User | None:
-        """Registering a user addes them to the users list
+        """Registering a user addes them to the users dict
 
         Args:
             username (str): unique username of the user

@@ -27,13 +27,30 @@ async def get_students(is_admin: Annotated[str, Depends(auth.verify_admin)], inc
 
     
 @router.get("/students/{id}", dependencies=[Depends(auth.verify_user)])
-def get_student_by_id(id: int = Path(title="The ID of the student you want to get", description="It must be a non zero integer", gt=0)):
+def get_student_by_id(id: int = Path(title="The ID of the student you want to get",
+                                     description="It must be a non zero integer",
+                                     gt=0)) -> Student:
+    """Get a specific student by their unique id
+
+    Args:
+        id (int): must be a non zero positive integer
+
+    Returns:
+        student: of type Student
+    """
     return db.get_student_by_id(DB_FILEPATH, id)
 
 
 @router.post("/students")
 def post_student(is_admin: Annotated[str, Depends(auth.verify_admin)], new_student: Student):
-    """Add new students to the database"""
+    """Add new students to the database
+
+    Raises:
+        HTTPException: User must be admin to use this enpoint, otherwise it returns a 401 code
+
+    Returns:
+        student: the new student object of type Student
+    """
     if not is_admin:
         raise HTTPException(status_code=401, detail="You don't have permission, only admins can add students")
     

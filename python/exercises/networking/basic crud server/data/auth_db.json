@@ -13,5 +13,15 @@
         "username": "yosi",
         "password": "$2b$12$H4KdQjYO5fDK620UoEkyBOLShqSKfuPSLIoTTWickzTF8XpgPWDf.",
         "role": "guest"
+    },
+    "sameer": {
+        "username": "sameer",
+        "password": "$2b$12$Ux16ScdeTF7MMcJp0hQz4eVQWpWbIPhp0vUIMjn9HicDVcJd6vK2G",
+        "role": "guest"
+    },
+    "string": {
+        "username": "string",
+        "password": "$2b$12$Hl1MXzuX76sc4KCqm4IRzO4OAqXOUqtxD4qlHnmofIe3qNxvAnCqu",
+        "role": "guest"
     }
 }
