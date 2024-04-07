@@ -10,6 +10,8 @@ from typing import Annotated
 JWT_SECRET = config("secret")
 AUTH_USERS_DB = "./data/auth_db.json"
 
+ROLES = ["admin", "guest"]
+
 def hash_password(password: str) -> bytes:
     bytes = password.encode('utf-8') 
     salt = bcrypt.gensalt() 
@@ -71,4 +73,4 @@ async def verify_admin(token: Annotated[str, Header(...)]):
     return role == "admin"
 
 async def verify_user(token: Annotated[str, Header(...)]):
-    verify_jwt(token)
+    return verify_jwt(token) in ROLES

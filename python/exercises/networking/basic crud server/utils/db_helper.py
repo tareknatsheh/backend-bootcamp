@@ -1,5 +1,12 @@
 import json
 
+def check_if_valid_school_data(data):
+    if not isinstance(data, dict) or 'students' not in data:
+        raise ValueError("Invalid db structure: must be a dictionary with a 'students' key")
+
+    if not isinstance(data['students'], list):
+        raise ValueError("Invalid db structure: 'students' must be a list.")
+
 def get_data(file_path):
     with open(file_path) as f:
         data = json.load(f)
@@ -14,7 +21,12 @@ def write_data(file_path, data):
 
 def get_all_students(file_path):
     data = get_data(file_path)
+    check_if_valid_school_data(data)
     return data["students"]
+
+def update_students_list(file_path, new_students_list: list):
+    data = {"students": new_students_list}
+    return write_data(file_path, data)
 
 def get_student_by_id(file_path, id):
     all_students = get_all_students(file_path)
@@ -41,3 +53,30 @@ def add_student(file_path, new_student):
         f.truncate()
         
         return new_student
+
+def delete_all_students(file_path) -> int | None:
+    try:
+        with open(file_path, "r+") as f:
+            f.seek(0)
+            content = f.read()
+            content = json.loads(content)
+            num_of_records = len(content["students"])
+            content["students"].clear()
+            f.seek(0)        
+            json.dump(content,f, indent=4, sort_keys=True)
+            f.truncate()
+
+            return num_of_records
+    except Exception as e:
+        print(e)
+        return None
+    
+def delete_student_by_id(file_path, id):
+    all_students: list = get_all_students(file_path)
+    for student in all_students:
+        if student["id"] == id:
+            all_students.remove(student)
+            # update db
+            update_students_list(file_path, all_students)
+            return student
+    raise FileNotFoundError(f'Student with id {id} not in db')
